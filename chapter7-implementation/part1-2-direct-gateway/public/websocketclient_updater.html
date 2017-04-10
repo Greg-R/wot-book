@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Sensors Over Websockets</title>
+
+
+</head>
+
+<body>
+    <h1>Sensors over WebSocket</h1>
+    <div id="temperature">
+        The temperature value is:
+
+    </div>
+    <div id="humidity">
+        The humidity value is:
+    </div>
+
+    <script type="text/javascript">
+        var temperatureText = document.getElementById("temperature").textContent;
+        var humidityText = document.getElementById("humidity").textContent;
+
+            var socket = new WebSocket('ws://192.168.1.10:8484/pi/sensors/' + 'temperature'); //#A
+            socket.onmessage = function(event) { //#B
+                var result = JSON.parse(event.data);
+                if (result.name === "Temperature Sensor"){
+                console.log(event.data)
+                document.getElementById("temperature").textContent = 'The current temperature is ' + result.value + ' degrees Celsius';
+            }               
+                if (result.name === "Humidity sensor"){
+                console.log(event.data)
+                document.getElementById("humidity").textContent = 'The current humidity is ' + result.value + '%';
+            }
+                
+            };
+            socket.onerror = function(error) { //#C
+                console.log('An error occured while trying to connected to a Websocket!');
+                console.log(error);
+            };
+
+    </script>
+
+</body>
+
+</html>

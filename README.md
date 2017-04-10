@@ -1,4 +1,4 @@
-# Building the Web of Things - Code
+# Building the Web of Things - An Update to Chapter 7 Code
 This repository contains a modified version of the example project in Chapter 7 [Building the Web of Things](http://book.webofthings.io) book.
 
 The goal of this fork is to remove the Object.observe function which is depracated in recent versions of Ecmascript (JavaScript).
