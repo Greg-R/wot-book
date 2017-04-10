@@ -1,11 +1,13 @@
 # Building the Web of Things - Code
-This repository contains all the Node.js and JavaScript code examples from the [Building the Web of Things](http://book.webofthings.io) book.
+This repository contains a modified version of the example project in Chapter 7 [Building the Web of Things](http://book.webofthings.io) book.
 
-# Downloading the code examples
+The goal of this fork is to remove the Object.observe function which is depracated in recent versions of Ecmascript (JavaScript).
+The Ecmascript "Proxy" class is used to create equivalent functionality.
 
-Clone the repository recursively to ensure all the sub projects are downloaded:
+Also included is a simple HTML page which updates as data is received
+from the server via WebSocket.
 
-`git clone --recursive https://github.com/webofthings/wot-book.git`
+Here is the original summary included with the project for reference:
 
 # What is the book about?
 The book is all about building apps for the Internet of Things using Web technologies. 
