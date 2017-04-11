@@ -1,7 +1,7 @@
 // Final version
 var httpServer = require('./servers/http'),
   wsServer = require('./servers/websockets'),
-  resources = require('./resources/model');
+  resources = require('./resources/model').resourcesObject;
 
 // Internal Plugins
 var ledsPlugin = require('./plugins/internal/ledsPlugin'), //#A
