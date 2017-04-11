@@ -2,7 +2,7 @@
 
 //  Remember that this is not the Proxy!
 //  Changes to the resources object will not be captured.
-var resources = require('./../../resources/model');
+var resources = require('./../../resources/model').resources;
 
 var actuator, interval;
 var model = resources.pi.actuators.leds['1'];
