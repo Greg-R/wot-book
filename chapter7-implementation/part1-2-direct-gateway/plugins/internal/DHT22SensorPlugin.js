@@ -1,4 +1,4 @@
-var resources = require('./../../resources/model'),
+var resources = require('./../../resources/model').resourcesProxy,
   utils = require('./../../utils/utils.js');
 
 var interval, sensor;
@@ -15,7 +15,7 @@ exports.start = function (params) {
   }
 };
 
-exports.stop = function () {
+exports.stop = function (params) {
   if (params.simulate) {
     clearInterval(interval);
   } else {
