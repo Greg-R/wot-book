@@ -1,4 +1,4 @@
-var resources = require('./../../resources/model');
+var resources = require('./../../resources/model').resourcesObject;
 
 var interval, sensor;
 var model = resources.pi.sensors.pir;
@@ -32,7 +32,7 @@ function connectHardware() { //#B
     showValue();
   });
   console.info('Hardware %s sensor started!', pluginName);
-};
+}
 
 function simulate() { //#E
   interval = setInterval(function () {
@@ -40,11 +40,11 @@ function simulate() { //#E
     showValue();
   }, localParams.frequency);
   console.info('Simulated %s sensor started!', pluginName);
-};
+}
 
 function showValue() {
   console.info(model.value ? 'there is someone!' : 'not anymore!');
-};
+}
 
 //#A starts and stops the plugin, should be accessible from other Node.js files so we export them
 //#B require and connect the actual hardware driver and configure it
