@@ -47,7 +47,7 @@ function connectHardware() {
   } else {
     console.warn('Failed to initialize sensor!');
   }
-};
+}
 
 function simulate() {
   interval = setInterval(function () {
@@ -56,12 +56,12 @@ function simulate() {
     showValue();
   }, localParams.frequency);
   console.info('Simulated %s sensor started!', pluginName);
-};
+}
 
 function showValue() {
   console.info('Temperature: %s C, humidity %s \%',
     model.temperature.value, model.humidity.value);
-};
+}
 
 //#A Initialize the driver for DHT22 on GPIO 12 (as specified in the model)
 //#B Fetch the values from the sensors

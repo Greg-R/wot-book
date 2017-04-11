@@ -22,7 +22,7 @@
         var temperatureText = document.getElementById("temperature").textContent;
         var humidityText = document.getElementById("humidity").textContent;
 
-            var socket = new WebSocket('ws://192.168.1.10:8484/pi/sensors/' + 'temperature'); //#A
+            var socket = new WebSocket('ws://192.168.1.12:8484/pi/sensors/' + 'temperature'); //#A
             socket.onmessage = function(event) { //#B
                 var result = JSON.parse(event.data);
                 if (result.name === "Temperature Sensor"){

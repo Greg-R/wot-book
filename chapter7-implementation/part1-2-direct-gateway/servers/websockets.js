@@ -8,18 +8,21 @@ exports.listen = function(server) {
     var url = ws.upgradeReq.url;
     console.info(url);
     try {
-      Object.observe(selectResouce(url), function (changes) { //#C
+        //  use the function selectResource to generate a URL object to "observe".
+        //  Create a Proxy object which observes the URL object.
+        //  The set function of the Proxy object will contain the ws.send function.
+      Object.observe(selectResource(url), function (changes) { //#C
         ws.send(JSON.stringify(changes[0].object), function () {
         });
-      })
+      });
     }
     catch (e) { //#D
       console.log('Unable to observe %s resource!', url);
-    };
+    }
   });
 };
 
-function selectResouce(url) { //#E
+function selectResource(url) { //#E
   var parts = url.split('/');
   parts.shift();
   var result = resources;
