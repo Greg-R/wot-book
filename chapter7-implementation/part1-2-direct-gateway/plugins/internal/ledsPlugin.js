@@ -1,5 +1,7 @@
 /*jshint esversion: 6 */
 
+//  Remember that this is not the Proxy!
+//  Changes to the resources object will not be captured.
 var resources = require('./../../resources/model');
 
 var actuator, interval;
@@ -12,7 +14,16 @@ var localParams = {
 
 exports.start = function (params) {
     localParams = params;
-    observe(model); //#A
+//    observe(model); //#A  OLD METHOD
+    
+    let ledProxy = new Proxy(model, {
+    set: function (target, property, value, receiver) {
+        console.info('Change detected by plugin for %s...', pluginName);
+        switchOnOff(model.value);
+        target[property] = value;
+        return true;
+    }
+});
 
     if (localParams.simulate) {
         simulate();
@@ -35,14 +46,7 @@ exports.stop = function () {
 //  Should ledProxy be wrapped by function observe,
 //  or should ledProxy simply be placed in exports.start function?
 
-let ledProxy = new Proxy(model, {
-    set: function (target, property, value, receiver) {
-        console.info('Change detected by plugin for %s...', pluginName);
-        switchOnOff(model.value);
-        target[property] = value;
-        return true;
-    }
-});
+
 
 /*function observe(what) {
     Object.observe(what, function (changes) {
