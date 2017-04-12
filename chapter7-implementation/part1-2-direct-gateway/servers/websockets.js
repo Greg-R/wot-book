@@ -53,7 +53,7 @@ function selectResource(url) { //#E
     for (var i = 0; i < parts.length; i++) {
         result = result[parts[i]];
     }
-    console.log(`The object returned by selectResource is ${result}`);
+    console.log(`The object.name returned by selectResource is ${result.name}`);
     return result;
 }
 
