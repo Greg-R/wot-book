@@ -25,7 +25,7 @@
                 "description": "A passive infrared sensor. When 'true' someone is present.",
                 "value": true,
                 "gpio": 17,
-                "eventName": "pirEvent";
+                "eventName": "pirEvent"
             }
         },
         "actuators": {
