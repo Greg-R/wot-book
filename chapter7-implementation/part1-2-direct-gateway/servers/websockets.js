@@ -13,7 +13,7 @@ exports.listen = function (server) {
     wss.on('connection', function (ws) { //#B
         var url = ws.upgradeReq.url;
         console.info(url);
-        try {
+ //       try {
             //  use the function selectResource to generate a URL object to "observe".
             //  Create a Proxy object which observes the URL object.
             //  The set function of the Proxy object will contain the ws.send function.
@@ -23,13 +23,13 @@ exports.listen = function (server) {
             let sensorProxy = new Proxy(selectResource(url), {
                 set: function (target, property, value, receiver) {
                     target[property] = value;
-                    ws.send(JSON.stringify(target), function () {});  //  Use the callback for something?
+                    ws.send(JSON.stringify(target), function () {console.log('ws.send function called!');});  //  Use the callback for something?
                     return true;
                 }
             });
-        } catch (e) { //#D
+ //       } catch (e) { //#D
             console.log('Unable to observe %s resource!', url);
-        }
+//        }
     });
 };
 
@@ -53,6 +53,7 @@ function selectResource(url) { //#E
     for (var i = 0; i < parts.length; i++) {
         result = result[parts[i]];
     }
+    console.log(`The object returned by selectResource is ${result}`);
     return result;
 }
 
