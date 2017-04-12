@@ -3,7 +3,7 @@
 var WebSocketServer = require('ws').Server;
 
 //  The following is the original Object, not the Proxy.
-let resources = require('./../resources/model').resources;
+let resources = require('./../resources/model').resourcesObject;
 
 exports.listen = function (server) {
     var wss = new WebSocketServer({
