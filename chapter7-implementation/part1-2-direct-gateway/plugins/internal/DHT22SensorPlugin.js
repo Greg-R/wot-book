@@ -1,73 +1,77 @@
 /*jshint esversion: 6 */
 
 var resources = require('./../../resources/model').resourcesProxy,
-  utils = require('./../../utils/utils.js');
+    utils = require('./../../utils/utils.js');
 
-let emitter = require('events').EventEmitter;
+let EventEmitter = require('events').EventEmitter;
+let emitter = new EventEmitter();
 
 var interval, sensor;
 var model = resources.pi.sensors;
 var pluginName = 'Temperature & Humidity';
-var localParams = {'simulate': false, 'frequency': 5000};
+var localParams = {
+    'simulate': false,
+    'frequency': 5000
+};
 
 exports.start = function (params) {
-  localParams = params;
-  if (params.simulate) {
-    simulate();
-  } else {
-    connectHardware();
-  }
+    localParams = params;
+    if (params.simulate) {
+        simulate();
+    } else {
+        connectHardware();
+    }
 };
 
 exports.stop = function (params) {
-  if (params.simulate) {
-    clearInterval(interval);
-  } else {
-    sensor.unexport();
-  }
-  console.info('%s plugin stopped!', pluginName);
+    if (params.simulate) {
+        clearInterval(interval);
+    } else {
+        sensor.unexport();
+    }
+    console.info('%s plugin stopped!', pluginName);
 };
 
 function connectHardware() {
- var sensorDriver = require('node-dht-sensor');
-  var sensor = {
-    initialize: function () {
-      return sensorDriver.initialize(22, model.temperature.gpio); //#A
-    },
-    read: function () {
-      var readout = sensorDriver.read(); //#B
-        //  Values in resources Object are updated here:
-      model.temperature.value = parseFloat(readout.temperature.toFixed(2));
-        emitter.emit('tempEvent');
-      model.humidity.value = parseFloat(readout.humidity.toFixed(2)); //#C
-        emitter.emet('humidityEvent');
-      showValue();
+    var sensorDriver = require('node-dht-sensor');
+    var sensor = {
+        initialize: function () {
+            return sensorDriver.initialize(22, model.temperature.gpio); //#A
+        },
+        read: function () {
+            var readout = sensorDriver.read(); //#B
+            //  Values in resources Object are updated here:
+            model.temperature.value = parseFloat(readout.temperature.toFixed(2));
+            emitter.emit('tempEvent');
+            model.humidity.value = parseFloat(readout.humidity.toFixed(2)); //#C
+            emitter.emit('humidityEvent');
+            showValue();
 
-      setTimeout(function () {
-        sensor.read(); //#D     //  The function call itself;  setTimeout determines the loop rate.
-      }, localParams.frequency);
+            setTimeout(function () {
+                sensor.read(); //#D     //  The function call itself;  setTimeout determines the loop rate.
+            }, localParams.frequency);
+        }
+    };
+    if (sensor.initialize()) {
+        console.info('Hardware %s sensor started!', pluginName);
+        sensor.read();
+    } else {
+        console.warn('Failed to initialize sensor!');
     }
-  };
-  if (sensor.initialize()) {
-    console.info('Hardware %s sensor started!', pluginName);
-    sensor.read();
-  } else {
-    console.warn('Failed to initialize sensor!');
-  }
 }
 
 function simulate() {
-  interval = setInterval(function () {
-    model.temperature.value = utils.randomInt(0, 40);
-    model.humidity.value = utils.randomInt(0, 100);
-    showValue();
-  }, localParams.frequency);
-  console.info('Simulated %s sensor started!', pluginName);
+    interval = setInterval(function () {
+        model.temperature.value = utils.randomInt(0, 40);
+        model.humidity.value = utils.randomInt(0, 100);
+        showValue();
+    }, localParams.frequency);
+    console.info('Simulated %s sensor started!', pluginName);
 }
 
 function showValue() {
-  console.info('Temperature: %s C, humidity %s \%',
-    model.temperature.value, model.humidity.value);
+    console.info('Temperature: %s C, humidity %s \%',
+        model.temperature.value, model.humidity.value);
 }
 
 //#A Initialize the driver for DHT22 on GPIO 12 (as specified in the model)
