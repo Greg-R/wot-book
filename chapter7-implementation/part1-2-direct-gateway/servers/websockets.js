@@ -24,6 +24,7 @@ exports.listen = function (server) {
         //  This could be implemented by adding a new property to resources "eventName".
         //  The callback will execute ws.send.
         let sensorObject = selectResource(url);
+        console.log(`The sensor object event name is ${sensorObject.eventName}.`);
         ws.addEventListener(sensorObject.eventName, function() {
             ws.send(JSON.stringify(sensorObject), function() {
                 console.log('ws.send function called!');
