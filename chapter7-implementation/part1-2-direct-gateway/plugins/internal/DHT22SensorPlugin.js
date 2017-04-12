@@ -1,5 +1,9 @@
+/*jshint esversion: 6 */
+
 var resources = require('./../../resources/model').resourcesProxy,
   utils = require('./../../utils/utils.js');
+
+let emitter = require('events').EventEmitter;
 
 var interval, sensor;
 var model = resources.pi.sensors;
@@ -32,12 +36,15 @@ function connectHardware() {
     },
     read: function () {
       var readout = sensorDriver.read(); //#B
+        //  Values in resources Object are updated here:
       model.temperature.value = parseFloat(readout.temperature.toFixed(2));
+        emitter.emit('tempEvent');
       model.humidity.value = parseFloat(readout.humidity.toFixed(2)); //#C
+        emitter.emet('humidityEvent');
       showValue();
 
       setTimeout(function () {
-        sensor.read(); //#D
+        sensor.read(); //#D     //  The function call itself;  setTimeout determines the loop rate.
       }, localParams.frequency);
     }
   };

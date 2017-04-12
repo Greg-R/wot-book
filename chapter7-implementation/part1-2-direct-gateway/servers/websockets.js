@@ -20,13 +20,25 @@ exports.listen = function (server) {
             //            Object.observe(selectResource(url), function (changes) { //#C  (Depracated)
             //                ws.send(JSON.stringify(changes[0].object), function () {});
             //            });
-            let sensorProxy = new Proxy(selectResource(url), {
-                set: function (target, property, value, receiver) {
-                    target[property] = value;
-                    ws.send(JSON.stringify(target), function () {console.log('ws.send function called!');});  //  Use the callback for something?
-                    return true;
-                }
+        //  Could use ws.addEventListener here instead of using this observer pattern.
+        //  This could be implemented by adding a new property to resources "eventName".
+        //  The callback will execute ws.send.
+        let sensorObject = selectResource(url);
+        ws.addEventListener(sensorObject.eventName, function() {
+            ws.send(JSON.stringify(sensorObject), function() {
+                console.log('ws.send function called!');
+                console.log(sensorObject);
             });
+        });
+  /*          let sensorProxy = new Proxy(selectResource(url), {
+              set: function (target, property, value, receiver) {
+                  target[property] = value;
+                  ws.send(JSON.stringify(target), function () {
+                      console.log('ws.send function called!');
+                  }); //  Use the callback for something?
+                  return true;
+              }
+          });*/
  //       } catch (e) { //#D
             console.log('Unable to observe %s resource!', url);
 //        }
