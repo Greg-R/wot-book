@@ -1,4 +1,4 @@
-var resources = require('./../../resources/model').resourcesObject;
+var resources = require('./../../resources/model');
 
 var interval, sensor;
 var model = resources.pi.sensors.pir;
