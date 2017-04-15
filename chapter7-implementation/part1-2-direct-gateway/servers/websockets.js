@@ -2,8 +2,10 @@
 
 var WebSocketServer = require('ws').Server;
 
-//  The following is the original Object, not the Proxy.
-let resources = require('./../resources/model').resourcesObject;
+let resources = require('./../resources/model');
+let temphumsensor = require('./DHT22SensorObject');
+let params = {'simulate': false, 'frequency': 1000};
+temphumsensor.start(params);
 
 exports.listen = function (server) {
     var wss = new WebSocketServer({
@@ -13,35 +15,15 @@ exports.listen = function (server) {
     wss.on('connection', function (ws) { //#B
         var url = ws.upgradeReq.url;
         console.info(url);
- //       try {
-            //  use the function selectResource to generate a URL object to "observe".
-            //  Create a Proxy object which observes the URL object.
-            //  The set function of the Proxy object will contain the ws.send function.
-            //            Object.observe(selectResource(url), function (changes) { //#C  (Depracated)
-            //                ws.send(JSON.stringify(changes[0].object), function () {});
-            //            });
-        //  Could use ws.addEventListener here instead of using this observer pattern.
-        //  This could be implemented by adding a new property to resources "eventName".
-        //  The callback will execute ws.send.
-        let sensorObject = selectResource(url);
-        console.log(`The sensor object event name is ${sensorObject.eventName}.`);
-        ws.addEventListener(sensorObject.eventName, function() {
-            ws.send(JSON.stringify(sensorObject), function() {
+        let resourceObject = selectResource(url);
+        console.log(`The sensor object event name is ${resourceObject.eventName}.`);
+        temphumsensor.on(resourceObject.eventName, function() {
+            ws.send(JSON.stringify(resourceObject), function() {
                 console.log('ws.send function called!');
-                console.log(sensorObject);
+                console.log(resourceObject);
             });
-        });
-  /*          let sensorProxy = new Proxy(selectResource(url), {
-              set: function (target, property, value, receiver) {
-                  target[property] = value;
-                  ws.send(JSON.stringify(target), function () {
-                      console.log('ws.send function called!');
-                  }); //  Use the callback for something?
-                  return true;
-              }
-          });*/
- //       } catch (e) { //#D
-            console.log('Unable to observe %s resource!', url);
+        }); 
+ //           console.log('Unable to observe %s resource!', url);
 //        }
     });
 };
