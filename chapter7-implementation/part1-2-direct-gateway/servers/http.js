@@ -19,7 +19,7 @@ app.use('/pi/sensors', sensorRoutes);
 app.use('/things', thingsRoutes);
 
 app.get('/pi', function (req, res) {
-  res.send('This is the WoT-Pi!')
+  res.send('This is the WoT-Pi!');
 });
 
 // For representation design

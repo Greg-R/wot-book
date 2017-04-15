@@ -1,45 +1,47 @@
 /*jshint esversion: 6 */
 
+//  This version of websockets.js uses Sensor objects which inherit EventEmitter
+//  rather than use the depracated "Object.observe()" function.
+
 var WebSocketServer = require('ws').Server;
 
-let resources = require('./../resources/model');
+let resources = require('./../resources/model');   //#A
 let TempHumSensor = require('../plugins/internal/DHT22SensorObject');
-let params = {'simulate': false, 'frequency': 1000};
-let temphumsensor = new TempHumSensor(params);
-temphumsensor.start();
+let params = {
+    'simulate': false,
+    'frequency': 1000
+};
+let temphumsensor = new TempHumSensor(params); // Instantiate the TempHumSensor object.
+temphumsensor.start();                         // Start collecting data.
 
 exports.listen = function (server) {
     var wss = new WebSocketServer({
         server: server
-    }); //#A
+    }); //#B
     console.info('WebSocket server started...');
-    wss.on('connection', function (ws) { //#B
+    wss.on('connection', function (ws) { //#C
         var url = ws.upgradeReq.url;
         console.info(url);
         let resourceObject = selectResource(url);
         console.log(`The sensor object event name is ${resourceObject.eventName}.`);
-        temphumsensor.on(resourceObject.eventName, function() {
-            ws.send(JSON.stringify(resourceObject), function() {
+        temphumsensor.on(resourceObject.eventName, function () {  //#D subscribe to event.
+            ws.send(JSON.stringify(resourceObject), function () {
                 console.log('ws.send function called!');
                 console.log(resourceObject);
             });
-        }); 
- //           console.log('Unable to observe %s resource!', url);
-//        }
+        });
     });
 };
 
 //  The following function is critical in that it returns a single "flat" object.
-//  The Proxy object is designed to work on this sort of flat object.
-//  The "resources" object used in this project is nested and does not have
-//  a straightforward application to Proxy (recursion is possible);
 //  For example, selectResource('/pi/sensors/temperature') returns this object:
 //{
 //    name: 'Temperature Sensor',
 //    description: 'An ambient temperature sensor.',
 //    unit: 'celsius',
 //    value: 0,
-//    gpio: 12
+//    gpio: 12,
+//    event: "tempEvent"   <-- NOTE!  This is a new property.
 //}
 
 function selectResource(url) { //#E
@@ -53,9 +55,8 @@ function selectResource(url) { //#E
     return result;
 }
 
-
-//#A Create a WebSockets server by passing it the Express server
-//#B Triggered after a protocol upgrade when the client connected
-//#C Register an observer corresponding to the resource in the protocol upgrade URL
-//#D Use a try/catch to catch to intercept errors (e.g., malformed/unsupported URLs)
+//#A Require, instantiate, and start the temperature/humidity sensor.
+//#B Create a WebSockets server by passing it the Express server
+//#C Triggered after a protocol upgrade when the client connected
+//#D Subscribe to the event corresponding to the resource in the protocol upgrade URL
 //#E This function takes a request URL and returns the corresponding resource
