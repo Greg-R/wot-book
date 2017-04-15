@@ -21,7 +21,7 @@ this.pluginName = 'Temperature & Humidity';
 this.localParams = params;
 }
 
-start(params) {
+start() {
  //   let localParams = params;
     if (this.localParams.simulate) {
         this.simulate();

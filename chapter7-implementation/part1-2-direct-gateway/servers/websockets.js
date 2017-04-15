@@ -5,8 +5,8 @@ var WebSocketServer = require('ws').Server;
 let resources = require('./../resources/model');
 let TempHumSensor = require('../plugins/internal/DHT22SensorObject');
 let params = {'simulate': false, 'frequency': 1000};
-let temphumsensor = new TempHumSensor();
-temphumsensor.start(params);
+let temphumsensor = new TempHumSensor(params);
+temphumsensor.start();
 
 exports.listen = function (server) {
     var wss = new WebSocketServer({
