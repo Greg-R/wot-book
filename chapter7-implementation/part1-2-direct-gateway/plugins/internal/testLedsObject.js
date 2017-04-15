@@ -14,3 +14,8 @@ let ledcontroller = new LedController(params);
 ledcontroller.start();
 
 ledcontroller.switchOnOff(true);
+
+let led1 = false;
+setInterval(() => {
+    led1 = !led1;
+}, 1000);
