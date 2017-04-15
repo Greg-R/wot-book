@@ -7,8 +7,14 @@ Since it was desired to emit events from the sensor object, the class inherits f
 
 The first attempt at this used the ES6 "Proxy" object.  Although this was made to partially work, using a sensor object with EventEmitter seemed to be more straightforward and natural fit into Node.  There were only a few lines of code changed to implement the sensor object into the project.
 
+The version of Node used was v7.8.0.  The project was run on a RaspberryPi 2 and was connected to my home network with a LAN cable.  The kernel information from the Pi:
+
+Linux raspberrypi 4.4.34-v7+ #930 SMP Wed Nov 23 15:20:41 GMT 2016 armv7l GNU/Linux
+
+Connecting to the Pi was done using Ubuntu Mint 16.03 with the Chromium browser.  The Chromium developer tools were used to observe HTTP and WebSocket activity.
+
 Also included is a simple HTML page which updates as data is received
-from the server via WebSocket.
+from the server via WebSocket.  Note that this page can only view either temperature or humidity data.  Edit the file in order to see the desired data (which is updated continuously via WebSocket).
 
 Here is the original summary included with the project for reference:
 
