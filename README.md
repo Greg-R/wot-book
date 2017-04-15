@@ -2,7 +2,10 @@
 This repository contains a modified version of the example project in Chapter 7 [Building the Web of Things](http://book.webofthings.io) book.
 
 The goal of this fork is to remove the Object.observe function which is depracated in recent versions of Ecmascript (JavaScript).
-The Ecmascript "Proxy" class is used to create equivalent functionality.
+The temperature/sensor Javascript module was modified into a class using the ES6 class declaration.
+Since it was desired to emit events from the sensor object, the class inherits from Node.js "EventEmitter".
+
+The first attempt at this used the ES6 "Proxy" object.  Although this was made to partially work, using a sensor object with EventEmitter seemed to be more straightforward and natural fit into Node.  There were only a few lines of code changed to implement the sensor object into the project.
 
 Also included is a simple HTML page which updates as data is received
 from the server via WebSocket.
