@@ -13,6 +13,10 @@ Linux raspberrypi 4.4.34-v7+ #930 SMP Wed Nov 23 15:20:41 GMT 2016 armv7l GNU/Li
 
 Connecting to the Pi was done using Ubuntu Mint 16.03 with the Chromium browser.  The Chromium developer tools were used to observe HTTP and WebSocket activity.
 
+To start the server:
+
+sudo node wot-server.js
+
 Also included is a simple HTML page which updates as data is received
 from the server via WebSocket.  Note that this page can only view either temperature or humidity data.  Edit the file in order to see the desired data (which is updated continuously via WebSocket).
 
