@@ -4,44 +4,40 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Sensors Over Websockets</title>
-
-
 </head>
 
 <body>
     <h1>Sensors over WebSocket</h1>
     <div id="temperature">
         The temperature value is:
-
     </div>
     <div id="humidity">
         The humidity value is:
     </div>
 
     <script type="text/javascript">
+        //  Basic WebSocket script to retrieve data from server and update the web page dynamically.
         var temperatureText = document.getElementById("temperature").textContent;
         var humidityText = document.getElementById("humidity").textContent;
-
-            var socket = new WebSocket('ws://192.168.1.12:8484/pi/sensors/' + 'temperature'); //#A
-            socket.onmessage = function(event) { //#B
-                var result = JSON.parse(event.data);
-                if (result.name === "Temperature Sensor"){
+        //  Note that as set-up with the path to 'humidity', it will only subscribe to humidity data.
+        //  Change 'humidity' to 'temperature' to subscribe to temperature data.
+        var socket = new WebSocket('ws://192.168.1.12:8484/pi/sensors/' + 'humidity'); //#A
+        socket.onmessage = function(event) { //#B
+            var result = JSON.parse(event.data);
+            if (result.name === "Temperature Sensor") {
                 console.log(event.data)
                 document.getElementById("temperature").textContent = 'The current temperature is ' + result.value + ' degrees Celsius';
-            }               
-                if (result.name === "Humidity sensor"){
+            }
+            if (result.name === "Humidity Sensor") {
                 console.log(event.data)
                 document.getElementById("humidity").textContent = 'The current humidity is ' + result.value + '%';
             }
-                
-            };
-            socket.onerror = function(error) { //#C
-                console.log('An error occured while trying to connected to a Websocket!');
-                console.log(error);
-            };
+        };
+        socket.onerror = function(error) { //#C
+            console.log('An error occured while trying to connected to a Websocket!');
+            console.log(error);
+        };
 
     </script>
-
 </body>
-
 </html>

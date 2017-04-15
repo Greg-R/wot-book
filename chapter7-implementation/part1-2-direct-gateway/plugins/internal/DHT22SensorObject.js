@@ -4,6 +4,7 @@
 var resources = require('./../../resources/model');
 var utils = require('./../../utils/utils.js');
 
+//  The sensor object will emit data events.  Require and inherit EventEmitter.
 let EventEmitter = require('events').EventEmitter;
 
 module.exports = class TempHumSensor extends EventEmitter {
