@@ -3,7 +3,7 @@
 var resources = require('./../../resources/model');
 let TempHumSensor = require('./DHT22SensorObject');
 
-let params = {'simulate': true, 'frequency': 1000};
+let params = {'simulate': false, 'frequency': 1000};
 
 let temphumsensor = new TempHumSensor(params);
 
