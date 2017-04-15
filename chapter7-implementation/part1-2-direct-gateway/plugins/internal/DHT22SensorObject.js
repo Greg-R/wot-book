@@ -43,9 +43,9 @@ connectHardware() {
  //   let model = this.model;
     var sensorDriver = require('node-dht-sensor');
     var sensor = {
-        initialize: function () {
+        initialize: (function () {
             return sensorDriver.initialize(22, this.model.temperature.gpio); //#A
-        },
+        }).bind(this),
         read: (function () {
             var readout = sensorDriver.read(); //#B
             //  Values in resources Object are updated here:
