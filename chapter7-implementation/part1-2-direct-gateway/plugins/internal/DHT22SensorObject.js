@@ -46,7 +46,7 @@ connectHardware() {
         initialize: function () {
             return sensorDriver.initialize(22, model.temperature.gpio); //#A
         },
-        read: function () {
+        read: (function () {
             var readout = sensorDriver.read(); //#B
             //  Values in resources Object are updated here:
             model.temperature.value = parseFloat(readout.temperature.toFixed(2));
@@ -58,7 +58,7 @@ connectHardware() {
             setTimeout(function () {
                 sensor.read(); //#D     //  The function call itself;  setTimeout determines the loop rate.
             }, this.localParams.frequency);
-        }
+        }).bind(this)
     };
     if (sensor.initialize()) {
         console.info('Hardware %s sensor started!', this.pluginName);
