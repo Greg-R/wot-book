@@ -15,8 +15,10 @@ ledcontroller.start();
 
 ledcontroller.switchOnOff(true);
 
-let led1 = false;
+/*let led1 = false;
 setInterval(() => {
     led1 = !led1;
     ledcontroller.switchOnOff(led1);
-}, 1000);
+}, 1000);*/
+
+ledcontroller.flash(2000);

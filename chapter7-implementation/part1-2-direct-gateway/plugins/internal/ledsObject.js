@@ -57,6 +57,14 @@ module.exports = class LedController extends EventEmitter {
         console.info('Hardware %s actuator started!', this.pluginName);
     }
 
+    flash(duration) {
+        let led1 = false;
+        setInterval(() => {
+            led1 = !led1;
+            this.switchOnOff(led1);
+        }, duration);
+    }
+
     simulate() {
         this.interval = setInterval(function () {
             // Switch value on a regular basis
@@ -73,5 +81,5 @@ module.exports = class LedController extends EventEmitter {
 
 //#A Observe the model for the LEDs
 //#B Listen for model changes, on changes call switchOnOff
-//#C Change the LED state by changing the GPIO state
+//#C Change the LED state by changing the GPIO state.  "Arrow function" here allows this to be in scope of object.
 //#D Connect the GPIO in write (output) mode
