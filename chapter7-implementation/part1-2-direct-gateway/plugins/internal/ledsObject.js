@@ -45,7 +45,7 @@ module.exports = class LedController extends EventEmitter {
 
     switchOnOff(value) {
         if (!this.params.simulate) {
-            this.actuator.write(value === true ? 1 : 0, function () { //#C
+            this.actuator.write(value === true ? 1 : 0, () => { //#C
                 console.info('Changed value of %s to %s', this.pluginName, value);
             });
         }
