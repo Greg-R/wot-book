@@ -12,3 +12,5 @@ let params = {
 let ledcontroller = new LedController(params);
 
 ledcontroller.start();
+
+ledcontroller.switchOnOff(true);

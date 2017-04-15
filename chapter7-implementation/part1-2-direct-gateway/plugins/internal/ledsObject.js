@@ -69,7 +69,7 @@ module.exports = class LedController extends EventEmitter {
         console.info('Simulated %s actuator started!', this.pluginName);
     }
 
-}
+};
 
 //#A Observe the model for the LEDs
 //#B Listen for model changes, on changes call switchOnOff
