@@ -1,8 +1,6 @@
 /*jshint esversion: 6 */
 
-//  Remember that this is not the Proxy!
-//  Changes to the resources object will not be captured.
-var resources = require('./../../resources/model').resourcesObject;
+var resources = require('./../../resources/model');
 
 var actuator, interval;
 var model = resources.pi.actuators.leds['1'];
@@ -45,8 +43,6 @@ exports.stop = function () {
 //  be trivial to substitute a Proxy!
 //  Should ledProxy be wrapped by function observe,
 //  or should ledProxy simply be placed in exports.start function?
-
-
 
 /*function observe(what) {
     Object.observe(what, function (changes) {
