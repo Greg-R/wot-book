@@ -13,6 +13,8 @@ Linux raspberrypi 4.4.34-v7+ #930 SMP Wed Nov 23 15:20:41 GMT 2016 armv7l GNU/Li
 
 Connecting to the Pi was done using Ubuntu Mint 16.03 with the Chromium browser.  The Chromium developer tools were used to observe HTTP and WebSocket activity.
 
+You will need to install the temperature/humidity sensor driver and also run npm update.
+
 To start the server:
 
 sudo node wot-server.js
