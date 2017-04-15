@@ -41,7 +41,6 @@ stop(params) {
 
 connectHardware() {
     let model = this.model;
-    let emit = TempHumSensor.emit();
     var sensorDriver = require('node-dht-sensor');
     var sensor = {
         initialize: function () {
@@ -51,7 +50,7 @@ connectHardware() {
             var readout = sensorDriver.read(); //#B
             //  Values in resources Object are updated here:
             model.temperature.value = parseFloat(readout.temperature.toFixed(2));
-            emit('tempEvent');
+            this.emit('tempEvent');
             this.model.humidity.value = parseFloat(readout.humidity.toFixed(2)); //#C
             this.emit('humidityEvent');
             this.showValue();
