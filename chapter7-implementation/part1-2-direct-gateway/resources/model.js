@@ -1,18 +1,18 @@
 /*jshint esversion: 6 */
 
 var resources = require('./resources.json');
-//  module.exports = resources;  (Original code)
+  module.exports = resources;//  (Original code)
 
 //  Need to export the Proxy of resources:
 
-var resourcesProxy = new Proxy(resources, {});
+//var resourcesProxy = new Proxy(resources, {});
 
 //module.exports = proxyResources;
 
-module.exports = {
-    'resourcesObject': resources,
-    'resourcesProxy': resourcesProxy
-};
+//module.exports = {
+//    'resourcesObject': resources,
+//    'resourcesProxy': resourcesProxy
+//};
 
 
 //  So this is the simplest of all possible proxies;
