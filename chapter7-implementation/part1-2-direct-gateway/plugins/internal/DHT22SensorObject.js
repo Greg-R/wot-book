@@ -40,16 +40,16 @@ stop(params) {
 }
 
 connectHardware() {
-    let model = this.model;
+ //   let model = this.model;
     var sensorDriver = require('node-dht-sensor');
     var sensor = {
         initialize: function () {
-            return sensorDriver.initialize(22, model.temperature.gpio); //#A
+            return sensorDriver.initialize(22, this.model.temperature.gpio); //#A
         },
         read: (function () {
             var readout = sensorDriver.read(); //#B
             //  Values in resources Object are updated here:
-            model.temperature.value = parseFloat(readout.temperature.toFixed(2));
+            this.model.temperature.value = parseFloat(readout.temperature.toFixed(2));
             this.emit('tempEvent');
             this.model.humidity.value = parseFloat(readout.humidity.toFixed(2)); //#C
             this.emit('humidityEvent');
@@ -58,7 +58,7 @@ connectHardware() {
             setTimeout(function () {
                 sensor.read(); //#D     //  The function call itself;  setTimeout determines the loop rate.
             }, this.localParams.frequency);
-        }).bind(this)
+        }).bind(this)   //  !!!NOTE the bind() FUNCTION HERE!
     };
     if (sensor.initialize()) {
         console.info('Hardware %s sensor started!', this.pluginName);
