@@ -53,7 +53,7 @@ module.exports = class LedController extends EventEmitter {
 
     connectHardware() {
         var Gpio = require('onoff').Gpio;
-        let actuator = new Gpio(this.model.gpio, 'out'); //#D
+        this.actuator = new Gpio(this.model.gpio, 'out'); //#D
         console.info('Hardware %s actuator started!', this.pluginName);
     }
 
