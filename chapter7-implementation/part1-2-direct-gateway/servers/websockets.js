@@ -3,7 +3,7 @@
 var WebSocketServer = require('ws').Server;
 
 let resources = require('./../resources/model');
-let temphumsensor = require('./DHT22SensorObject');
+let temphumsensor = require('../plugins/internal/DHT22SensorObject');
 let params = {'simulate': false, 'frequency': 1000};
 temphumsensor.start(params);
 
