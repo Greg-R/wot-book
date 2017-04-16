@@ -51,7 +51,7 @@ module.exports = class LedController extends EventEmitter {
             set: function (receivingObject, property, value) {
                 console.log(`The LED's Proxy is changed and the new value is ${value}`);
                 receivingObject[property] = value; //  This performs the change.
-                
+                this.switchOnOff(value);  //  Switch the LED.
                 return true;
             }
         };
@@ -75,6 +75,7 @@ module.exports = class LedController extends EventEmitter {
         let led1 = false;
         setInterval(() => {
             led1 = !led1;
+            this.modelProxy = led1;
             this.switchOnOff(led1);
         }, duration);
     }
@@ -82,10 +83,10 @@ module.exports = class LedController extends EventEmitter {
     simulate() {
         this.interval = setInterval(function () {
             // Switch value on a regular basis
-            if (this.model.value) {
-                this.model.value = false;
+            if (this.modelProxy.value) {
+                this.modelProxy.value = false;
             } else {
-                this.model.value = true;
+                this.modelProxy.value = true;
             }
         }, this.params.frequency);
         console.info('Simulated %s actuator started!', this.pluginName);
