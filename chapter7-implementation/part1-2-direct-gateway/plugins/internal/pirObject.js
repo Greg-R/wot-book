@@ -10,6 +10,7 @@ let EventEmitter = require('events').EventEmitter;
 module.exports = class PIRsensor extends EventEmitter {
 
     constructor(params) {
+        super();
         this.interval = undefined;
         this.sensor = undefined;
         this.model = resources.pi.sensors.pir;
@@ -41,6 +42,7 @@ module.exports = class PIRsensor extends EventEmitter {
             if (err) exit(err);
             this.model.value = !!value;
             this.showValue();
+            this.emit('pirEvent');
         });
         console.info('Hardware %s sensor started!', this.pluginName);
     }
