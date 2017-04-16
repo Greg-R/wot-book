@@ -19,4 +19,4 @@ ledcontroller.switchOnOff(true);
 
 //ledcontroller.flash(2000);
 
-ledcontroller.model.value = false;
+ledcontroller.modelProxy.value = false;

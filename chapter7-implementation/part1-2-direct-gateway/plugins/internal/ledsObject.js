@@ -16,7 +16,7 @@ module.exports = class LedController extends EventEmitter {
         this.model = resources.pi.actuators.leds['1'];
         this.pluginName = this.model.name;
         this.params = params; // { simulate: false, frequency: 1000}
-        this.ledProxy = new Proxy(this.model, this.ledHandler());
+        this.modelProxy = new Proxy(this.model, this.ledHandler());
     }
 
     start(params) {
@@ -30,7 +30,7 @@ module.exports = class LedController extends EventEmitter {
 
     stop() {
         if (this.params.simulate) {
-    //        clearInterval(interval);
+            //        clearInterval(interval);
         } else {
             this.actuator.unexport();
         }
@@ -43,17 +43,18 @@ module.exports = class LedController extends EventEmitter {
             switchOnOff(model.value); //#B
         });
     }*/
-    
+
     //  Replace the above function observe with a new function based on the Proxy class.
-    
- 
-    ledHandler () {     
-    return {   set: function (receivingObject, property, value)  {
-            console.log(`The LED's Proxy is changed and the new value is ${value}`);
-            receivingObject[property] = value;  //  This performs the change.
-            return true;
-        }
-    };
+
+    ledHandler() {
+        return {
+            set: function (receivingObject, property, value) {
+                console.log(`The LED's Proxy is changed and the new value is ${value}`);
+                receivingObject[property] = value; //  This performs the change.
+                
+                return true;
+            }
+        };
     }
 
     switchOnOff(value) {
