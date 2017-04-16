@@ -17,6 +17,6 @@ ledcontroller.switchOnOff(true);
 
 //  The flash method is for testing the class.
 
-//ledcontroller.flash(2000);
+ledcontroller.flash(2000);
 
-ledcontroller.modelProxy.value = false;
+//ledcontroller.modelProxy.value = false;
