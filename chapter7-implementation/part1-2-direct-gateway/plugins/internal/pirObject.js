@@ -38,7 +38,7 @@ module.exports = class PIRsensor extends EventEmitter {
     connectHardware() { //#B
         var Gpio = require('onoff').Gpio;
         this.sensor = new Gpio(this.model.gpio, 'in', 'both'); //#C
-        this.sensor.watch(function (err, value) { //#D
+        this.sensor.watch((err, value) => { //#D
             if (err) exit(err);
             this.model.value = !!value;
             this.showValue();
