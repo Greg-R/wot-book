@@ -23,6 +23,6 @@ pirsensor.on('pirEvent', () => {
 
 pirsensor.start();
 
-console.log(pirsensor.model.pir.value);
+console.log(pirsensor.model.value);
 
 console.log(pirsensor.model);
