@@ -2,7 +2,7 @@
 
 //  Test the pirObject.
 
-let PIRsensor = require('./ledsObject');
+let PIRsensor = require('./pirObject');
 
 let params = {
     'simulate': false,
