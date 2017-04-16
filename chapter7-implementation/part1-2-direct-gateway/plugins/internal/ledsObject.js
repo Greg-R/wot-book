@@ -75,8 +75,7 @@ module.exports = class LedController extends EventEmitter {
         let led1 = false;
         setInterval(() => {
             led1 = !led1;
-            this.modelProxy = led1;
-            this.switchOnOff(led1);
+            this.modelProxy.value = led1;
         }, duration);
     }
 
