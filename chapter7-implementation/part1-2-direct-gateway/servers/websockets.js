@@ -5,17 +5,21 @@
 
 var WebSocketServer = require('ws').Server;
 
-let resources = require('./../resources/model');   //#A
+let resources = require('./../resources/model'); //#A
+
 let TempHumSensor = require('../plugins/internal/DHT22SensorObject');
 let PIRsensor = require('../plugins/internal/pirObject');
+let ledsActuator = require('../plugins/internal/ledsObject');
 let params = {
     'simulate': false,
     'frequency': 1000
 };
 let temphumsensor = new TempHumSensor(params); // Instantiate the TempHumSensor object.
-temphumsensor.start();                         // Start collecting data.
+temphumsensor.start(); // Start collecting data.
 let pirsensor = new PIRsensor(params); // Instantiate the PIRsensor object.
-pirsensor.start();                         // Start collecting data.
+pirsensor.start(); // Start collecting data.
+let ledsactuator = new ledsActuator(params); // Instantiate the PIRsensor object.
+ledsactuator.start(); // Begin listening for commands.
 
 exports.listen = function (server) {
     var wss = new WebSocketServer({
@@ -27,16 +31,18 @@ exports.listen = function (server) {
         console.info(url);
         let resourceObject = selectResource(url);
         console.log(`The sensor object event name is ${resourceObject.eventName}.`);
-        temphumsensor.on(resourceObject.eventName, function () {  //#D subscribe to event.
+        temphumsensor.on(resourceObject.eventName, function () { //#D subscribe to event.
             ws.send(JSON.stringify(resourceObject), function () {
                 console.log('ws.send function called by temphumsensor!');
                 console.log(resourceObject);
-            });});
-            pirsensor.on(resourceObject.eventName, function () {  //#D subscribe to event.
+            });
+        });
+        pirsensor.on(resourceObject.eventName, function () { //#D subscribe to event.
             ws.send(JSON.stringify(resourceObject), function () {
                 console.log('ws.send function called by pirsensor!');
                 console.log(resourceObject);
-            });});
+            });
+        });
     });
 };
 
