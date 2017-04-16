@@ -18,7 +18,7 @@ module.exports = class PIRsensor extends EventEmitter {
     }
 
     start(params) { //#A
-        if (this.Params.simulate) {
+        if (this.params.simulate) {
             this.simulate();
         } else {
             this.connectHardware();
