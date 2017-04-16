@@ -48,7 +48,7 @@ module.exports = class LedController extends EventEmitter {
 
     ledHandler() {
         return {
-            set: function (receivingObject, property, value) {
+            set: (receivingObject, property, value) => {
                 console.log(`The LED's Proxy is changed and the new value is ${value}`);
                 receivingObject[property] = value; //  This performs the change.
                 this.switchOnOff(value);  //  Switch the LED.
