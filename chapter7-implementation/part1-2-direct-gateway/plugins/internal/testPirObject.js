@@ -15,7 +15,7 @@ let pirsensor = new PIRsensor(params);
 
 pirsensor.start();
 
-console.log(pirsensor.model.temperature.value);
+console.log(pirsensor.model.value);
 
 pirsensor.on('pirEvent', () => {
     console.log('pirEvent fired!');
