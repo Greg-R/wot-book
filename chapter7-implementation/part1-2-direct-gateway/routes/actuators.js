@@ -1,6 +1,9 @@
+/*jshint esversion: 6 */
+
 var express = require('express'),
   router = express.Router(),
   resources = require('./../resources/model');
+let resourcesProxy = new Proxy(resources, {});
 
 router.route('/').get(function (req, res, next) {
   req.result = resources.pi.actuators;
@@ -16,7 +19,7 @@ router.route('/leds/:id').get(function (req, res, next) { //#A
   req.result = resources.pi.actuators.leds[req.params.id];
   next();
 }).put(function(req, res, next) { //#B
-  var selectedLed = resources.pi.actuators.leds[req.params.id];
+  var selectedLed = resourcesProxy.pi.actuators.leds[req.params.id];
   selectedLed.value = req.body.value; //#C
   req.result = selectedLed;
   next();
