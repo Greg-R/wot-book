@@ -2,6 +2,8 @@
 
 //  Test the pirObject.
 
+//  Is require of resources necessary?  Shouldn't it be in the object?
+var resources = require('./../../resources/model');
 let PIRsensor = require('./pirObject');
 
 let params = {
