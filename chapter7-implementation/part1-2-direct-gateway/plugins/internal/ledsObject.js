@@ -30,7 +30,7 @@ module.exports = class LedController extends EventEmitter {
 
     stop() {
         if (this.params.simulate) {
-            //        clearInterval(interval);
+                    clearInterval(this.interval);
         } else {
             this.actuator.unexport();
         }
