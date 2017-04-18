@@ -14,12 +14,11 @@ let params = {
     'simulate': false,
     'frequency': 1000
 };
+//  Instantiate and start sensors:
 let temphumsensor = new TempHumSensor(params); // Instantiate the TempHumSensor object.
 temphumsensor.start(); // Start collecting data.
 let pirsensor = new PIRsensor(params); // Instantiate the PIRsensor object.
 pirsensor.start(); // Start collecting data.
-//let ledsactuator = new ledsActuator(params); // Instantiate the PIRsensor object.
-//ledsactuator.start(); // Begin listening for commands.
 
 exports.listen = function (server) {
     var wss = new WebSocketServer({
