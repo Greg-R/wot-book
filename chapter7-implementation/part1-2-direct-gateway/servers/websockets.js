@@ -9,7 +9,7 @@ let resources = require('./../resources/model'); //#A
 
 let TempHumSensor = require('../plugins/internal/DHT22SensorObject');
 let PIRsensor = require('../plugins/internal/pirObject');
-let ledsActuator = require('../plugins/internal/ledsObject');
+//let ledsActuator = require('../plugins/internal/ledsObject');
 let params = {
     'simulate': false,
     'frequency': 1000
@@ -18,8 +18,8 @@ let temphumsensor = new TempHumSensor(params); // Instantiate the TempHumSensor 
 temphumsensor.start(); // Start collecting data.
 let pirsensor = new PIRsensor(params); // Instantiate the PIRsensor object.
 pirsensor.start(); // Start collecting data.
-let ledsactuator = new ledsActuator(params); // Instantiate the PIRsensor object.
-ledsactuator.start(); // Begin listening for commands.
+//let ledsactuator = new ledsActuator(params); // Instantiate the PIRsensor object.
+//ledsactuator.start(); // Begin listening for commands.
 
 exports.listen = function (server) {
     var wss = new WebSocketServer({

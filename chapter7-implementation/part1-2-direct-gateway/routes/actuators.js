@@ -12,6 +12,7 @@ let params = {
     'frequency': 1000
 };
 let ledObject = new LedController(params);
+ledObject.start();
 
 router.route('/').get(function (req, res, next) {
   req.result = resources.pi.actuators;
