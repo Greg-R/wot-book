@@ -45,7 +45,8 @@ module.exports = class LedController extends EventEmitter {
     }*/
 
     //  Replace the above function observe with a new function based on the Proxy class.
-
+    //  The Proxy will be written to in the actuators.js module.
+    //  Move this ^ to just after the constructor when cleaning up.
     ledHandler() {
         return {
             set: (receivingObject, property, value) => {

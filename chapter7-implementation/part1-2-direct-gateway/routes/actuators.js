@@ -3,7 +3,11 @@
 var express = require('express'),
   router = express.Router(),
   resources = require('./../resources/model');
-let resourcesProxy = new Proxy(resources, {});
+
+//  Instantiate the Actuator object here:
+
+let LedController = require('../plugins/internal/ledsObject.js');
+let ledObject = new LedController();
 
 router.route('/').get(function (req, res, next) {
   req.result = resources.pi.actuators;
@@ -19,8 +23,12 @@ router.route('/leds/:id').get(function (req, res, next) { //#A
   req.result = resources.pi.actuators.leds[req.params.id];
   next();
 }).put(function(req, res, next) { //#B
-  var selectedLed = resourcesProxy.pi.actuators.leds[req.params.id];
-  selectedLed.value = req.body.value; //#C
+    
+  let selectedLedProxy = ledObject.modelProxy;
+    
+   // Write to the Proxy provided by the Actuator 
+    var selectedLed = resources.pi.actuators.leds[req.params.id];
+  selectedLedProxy.value = req.body.value; // 
   req.result = selectedLed;
   next();
 });
