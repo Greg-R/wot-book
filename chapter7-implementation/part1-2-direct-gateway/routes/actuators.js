@@ -7,7 +7,11 @@ var express = require('express'),
 //  Instantiate the Actuator object here:
 
 let LedController = require('../plugins/internal/ledsObject.js');
-let ledObject = new LedController();
+let params = {
+    'simulate': false,
+    'frequency': 1000
+};
+let ledObject = new LedController(params);
 
 router.route('/').get(function (req, res, next) {
   req.result = resources.pi.actuators;
